@@ -1,19 +1,12 @@
 import praw
-import pdb
 import re
 import os
-import fetch_google_image
-
-def log_response():
-    with open("post_replied_to.txt", "w") as f:
-        for post_id in posts_replied_to:
-            f.write(post_id + "\n")
 
 
 # Create the reddit instance
 reddit = praw.Reddit('bot1')
 
-if not os.path.isfile("posts_replied_to.txt"):
+if not os.path.isfile("post_replied_to.txt"):
     posts_replied_to = []
 else:
     # Opens file and create list of submission ids
@@ -32,7 +25,9 @@ for submission in subreddit.hot(limit=5):
             print("Bot replying to : ", submission.title)
             posts_replied_to.append(submission.id)  # keep track of submissions replied to
 
-log_response()
+with open("post_replied_to.txt", "w") as f:
+    for post_id in posts_replied_to:
+        f.write(post_id + "\n")
 
 
 
