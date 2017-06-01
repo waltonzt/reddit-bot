@@ -2,6 +2,7 @@ import praw
 import pdb
 import re
 import os
+import fetch_google_image
 
 # Create the reddit instance
 reddit = praw.Reddit('bot1')
@@ -19,8 +20,8 @@ subreddit = reddit.subreddit('pythonforengineers')
 
 for submission in subreddit.hot(limit=5):
     if submission.id not in posts_replied_to:
-        if re.search("i love python", submission.title, re.IGNORECASE):
-            submission.reply("Botty bot says: Me too!!!")
+        if re.search("otter", submission.title, re.IGNORECASE):
+            submission.reply("Here is an \n[Otter](https://i.ytimg.com/vi/ptkytDOVFN0/maxresdefault.jpg)")
             print("Bot replying to : ", submission.title)
             posts_replied_to.append(submission.id)  # keep track of submissions replied to
 
