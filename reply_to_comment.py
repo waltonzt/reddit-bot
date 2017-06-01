@@ -12,9 +12,9 @@ if not os.path.isfile("comments_replied_to.txt"):
 else:
     # Opens file and create list of submission ids
     with open("comments_replied_to.txt", "r") as f:
-        posts_replied_to = f.read()
-        posts_replied_to = posts_replied_to.split("\n")
-        posts_replied_to = list(filter(None, posts_replied_to)) # Gets rid of empty values
+        comments_replied_to = f.read()
+        comments_replied_to = comments_replied_to.split("\n")
+        comments_replied_to = list(filter(None, comments_replied_to))   # Gets rid of empty values
 
 
 for comment in subreddit.stream.comments():
@@ -26,5 +26,5 @@ for comment in subreddit.stream.comments():
 
 
 with open("comments_replied_to.txt", "w") as f:
-    for post_id in posts_replied_to:
+    for post_id in comments_replied_to:
         f.write(post_id + "\n")
