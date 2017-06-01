@@ -4,6 +4,12 @@ import re
 import os
 import fetch_google_image
 
+def log_response():
+    with open("post_replied_to.txt", "w") as f:
+        for post_id in posts_replied_to:
+            f.write(post_id + "\n")
+
+
 # Create the reddit instance
 reddit = praw.Reddit('bot1')
 
@@ -18,6 +24,7 @@ else:
 
 subreddit = reddit.subreddit('pythonforengineers')
 
+
 for submission in subreddit.hot(limit=5):
     if submission.id not in posts_replied_to:
         if re.search("otter", submission.title, re.IGNORECASE):
@@ -25,8 +32,8 @@ for submission in subreddit.hot(limit=5):
             print("Bot replying to : ", submission.title)
             posts_replied_to.append(submission.id)  # keep track of submissions replied to
 
-with open("post_replied_to.txt", "w") as f:
-    for post_id in posts_replied_to:
-        f.write(post_id + "\n")
+log_response()
+
+
 
 

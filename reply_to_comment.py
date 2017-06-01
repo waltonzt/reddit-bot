@@ -1,0 +1,32 @@
+import praw
+import pdb
+import re
+import os
+
+
+def log_response():
+    with open("comments_replied_to.txt", "w") as f:
+        for post_id in posts_replied_to:
+            f.write(post_id + "\n")
+
+
+reddit = praw.Reddit('bot1')
+
+subreddit = reddit.subreddit("pythonforengineers")
+
+if not os.path.isfile("comments_replied_to.txt"):
+    comments_replied_to = []
+else:
+    # Opens file and create list of submission ids
+    with open("comments_replied_to.txt", "r") as f:
+        posts_replied_to = f.read()
+        posts_replied_to = posts_replied_to.split("\n")
+        posts_replied_to = list(filter(None, posts_replied_to)) # Gets rid of empty values
+
+
+for comment in subreddit.stream.comments():
+    if comment.id not in comments_replied_to:
+        if re.search("otters are lame", comment.body, re.IGNORECASE):
+            comment.reply("[Otters Rock](http://68.media.tumblr.com/7399e636f0a16846ad9dc4fdb8dbb7c7/tumblr_" +
+                             "onfy2qT8lO1w5irhpo1_500.jpg)")
+            comments_replied_to.append(comment.id)  # keep track of submissions replied to
